@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotex Live Signal Viewer</title>
+  <style>
+    body {
+      background-color: #0d1117;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: #161b22;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 320px;
+      box-shadow: 0 0 10px #111;
+    }
+    input {
+      margin: 5px;
+      padding: 8px;
+      width: 80%;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      border-radius: 6px;
+      background-color: #238636;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2ea043;
+    }
+  </style>
+</head>
+<body>
+  <h2>📡 Quotex Live Signal Viewer</h2>
+  <div class="card">
+    <input id="open" placeholder="Open" type="number" step="0.0001"><br>
+    <input id="high" placeholder="High" type="number" step="0.0001"><br>
+    <input id="low" placeholder="Low" type="number" step="0.0001"><br>
+    <input id="close" placeholder="Close" type="number" step="0.0001"><br>
+    <input id="volume" placeholder="Volume" type="number"><br>
+    <button onclick="getSignal()">Get Signal</button>
+    <h3 id="result"></h3>
+  </div>
+
+  <script>
+    async function getSignal() {
+      const open = document.getElementById('open').value;
+      const high = document.getElementById('high').value;
+      const low = document.getElementById('low').value;
+      const close = document.getElementById('close').value;
+      const volume = document.getElementById('volume').value;
+
+      const url = `http://127.0.0.1:8000/signal/?open=${open}&high=${high}&low=${low}&close=${close}&volume=${volume}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      document.getElementById('result').innerText = `Signal: ${data.signal}`;
+    }
+  </script>
+</body>
+</html>
